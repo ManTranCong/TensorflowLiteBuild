@@ -38,5 +38,8 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: libtensorflowlite
-        path: tensorflow/bazel-bin/tensorflow/lite/libtensorflowlite.so
+        name: tensorflow-lite-headers-and-library
+        path: |
+            tensorflow/tensorflow/lite/*.h
+            tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include/flatbuffers/*.h
+            bazel-bin/tensorflow/lite/libtensorflowlite.so
