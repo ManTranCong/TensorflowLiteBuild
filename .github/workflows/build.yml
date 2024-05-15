@@ -32,6 +32,7 @@ jobs:
 
     - name: Build TensorFlow Lite
       run: |
+        cd tensorflow
         bazel build -c opt --cxxopt=-std=c++17 //tensorflow/lite:libtensorflowlite.so
 
     - name: Upload artifact
