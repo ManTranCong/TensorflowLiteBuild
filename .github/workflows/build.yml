@@ -1,0 +1,41 @@
+name: Build TensorFlow Lite
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install Bazel
+      run: |
+        sudo apt update
+        sudo apt install curl gnupg
+        curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
+        sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
+        echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+        sudo apt update
+        sudo apt install bazel
+
+    - name: Clone TensorFlow repository
+      run: |
+        git clone https://github.com/tensorflow/tensorflow.git
+        cd tensorflow
+
+    - name: Build TensorFlow Lite
+      run: |
+        bazel build -c opt --cxxopt=-std=c++17 //tensorflow/lite:libtensorflowlite.so
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: libtensorflowlite
+        path: tensorflow/bazel-bin/tensorflow/lite/libtensorflowlite.so
