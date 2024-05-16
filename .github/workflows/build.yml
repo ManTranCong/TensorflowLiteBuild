@@ -35,13 +35,13 @@ jobs:
         cd tensorflow
         bazel build -c opt --cxxopt=-std=c++17 //tensorflow/lite:libtensorflowlite.so
 
-    - name: Zip headers and library
-      run: |
-        cd tensorflow
-        zip -r tensorflow-lite-headers-and-library.zip tensorflow/lite ../bazel-bin/tensorflow/lite/libtensorflowlite.so
+    # - name: Zip headers and library
+    #   run: |
+    #     cd tensorflow
+    #     zip -r tensorflow-lite-headers-and-library.zip tensorflow/lite 
     
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: tensorflow-lite-headers-and-library
-        path: tensorflow/tensorflow-lite-headers-and-library.zip
+        path: .
