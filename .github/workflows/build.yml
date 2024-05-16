@@ -38,7 +38,7 @@ jobs:
     - name: Build TensorFlow Lite
       run: |
         cd tensorflow
-        bazel build -c opt //tensorflow/lite:libtensorflowlite.so
+        bazel build -c opt --cxxopt=-std=c++17 //tensorflow/lite:libtensorflowlite.so
 
     - name: Tar TensorFlow Lite and Core Util
       run: |
