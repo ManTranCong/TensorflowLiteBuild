@@ -38,7 +38,7 @@ jobs:
     - name: Zip headers and library
       run: |
         cd tensorflow
-        zip -r tensorflow-lite-headers-and-library.zip tensorflow/tensorflow/lite bazel-bin/tensorflow/lite/libtensorflowlite.so
+        zip -r tensorflow-lite-headers-and-library.zip tensorflow/lite ../bazel-bin/tensorflow/lite/libtensorflowlite.so
     
     - name: Upload artifact
       uses: actions/upload-artifact@v2
