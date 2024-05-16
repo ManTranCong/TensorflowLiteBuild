@@ -44,6 +44,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: tensorflow-lite-headers-and-library
-        path: |
-            cd tensorflow
-            tensorflow-lite-headers-and-library.zip
+        path: tensorflow/tensorflow-lite-headers-and-library.zip
