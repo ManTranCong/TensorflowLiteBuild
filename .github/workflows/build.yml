@@ -27,21 +27,29 @@ jobs:
 
     - name: Clone TensorFlow repository
       run: |
-        git clone https://github.com/tensorflow/tensorflow.git
+        git clone https://github.com/tensorflow/tensorflow.git -b v2.4.1 --depth 1
         cd tensorflow
 
     - name: Build TensorFlow Lite
       run: |
         cd tensorflow
-        bazel build -c opt --cxxopt=-std=c++17 //tensorflow/lite:libtensorflowlite.so
+        bazel build -c opt //tensorflow/lite:libtensorflowlite.so
 
-    # - name: Zip headers and library
-    #   run: |
-    #     cd tensorflow
-    #     zip -r tensorflow-lite-headers-and-library.zip tensorflow/lite 
-    
+    - name: Tar TensorFlow Lite and Core Util
+      run: |
+        cd tensorflow
+        mkdir -p output
+        tar -hczf output/tensorflow_lite.tar.gz -C tensorflow/lite .
+        tar -hczf output/core_util.tar.gz -C tensorflow/core/util .
+        cp bazel-bin/tensorflow/lite/libtensorflowlite.so output/.
+
+    - name: Tar Flatbuffers
+      run: |
+        cd tensorflow/bazel-out/k8-opt/bin/external/flatbuffers/_virtual_includes/flatbuffers
+        tar -hczf ../../../../../../../output/flatbuffers.tar.gz *
+
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: tensorflow-lite-headers-and-library
-        path: .
+        path: tensorflow/output/
