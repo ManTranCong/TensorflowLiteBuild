@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
@@ -19,7 +19,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install numpy
-        
+
     - name: Install Bazel
       run: |
         sudo apt update
@@ -32,7 +32,7 @@ jobs:
 
     - name: Clone TensorFlow repository
       run: |
-        git clone https://github.com/tensorflow/tensorflow.git -b v2.4.1 --depth 1
+        git clone https://github.com/tensorflow/tensorflow.git 
         cd tensorflow
 
     - name: Build TensorFlow Lite
